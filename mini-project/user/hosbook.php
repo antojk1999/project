@@ -168,7 +168,7 @@ height:300%;"/>
 <ul>
 <table cellpadding="20px" cellspacing="20px" >
 <tr>
-<td ><l><button>Hospital Booking</button> </li></td></tr>
+<td ><l></li></td></tr>
 <td></td>
 </tr>
 </ul>
@@ -213,7 +213,7 @@ height:300%;"/>
 
 <table>
 <tr>
-    <td><button type="submit1" name="submit1" class="btn">Payment</button></td>
+    <td><button type="submit1" name="submit1" class="btn">Register</button></td>
     <td><button type="reset" class="btn cancel" onclick="closeForm1()">Close</button></td>
 	
 </table>
@@ -261,7 +261,7 @@ function closeForm1() {
 <?php
 
 
-$new1="SELECT d1.dept,d2.attendence,d2.doctname from hosdept d1,deptdoctors d2 WHERE d1.deptid=d2.deptid ";
+$new1="SELECT d1.dept,d2.attendence,d2.doctname from hosdept d1,deptdoctors d2 WHERE d1.deptid=d2.deptid and d2.user=1 ";
 
 $res1=mysqli_query($con,$new1);
 $res2=mysqli_query($con,$new1);
@@ -338,7 +338,7 @@ while($r1=mysqli_fetch_assoc($res2))
 <table>
 <tr>
 <td>
-<button style="width:200px;height:40px;background:#056f51;border-radius:9px;" name="submi">
+<button style="width:200px;height:50px;background:#056f51;border-radius:9px;" name="submi">
 		 <text style="color:white;"> Fix Appointment</a>
 		 </button></td>
   
@@ -468,13 +468,14 @@ while($row6=mysqli_fetch_assoc($abc))
 }
 ?>
 
+
 <?php
 if(isset($_POST['submit3']))
 {
-	
-	
 ?>
-
+<table>
+<tr>
+<td>
 <?php
 
 	$phno=$_POST['phno'];
@@ -499,7 +500,10 @@ while($row3=mysqli_fetch_assoc($ab))
 		
 		?>
 		
-		<table width="350%" style="margin-top:20%;margin-left:120%;background:;">
+		
+		
+		
+		<table width="200%" style="margin-top:20%;margin-left:120%;background:;">
 		 <tr>
 		<td>		 
 		 doctor name:
@@ -550,8 +554,88 @@ while($row3=mysqli_fetch_assoc($ab))
 }
 }
 }
-}
+?>
 
+</td>
+<td >
+<?php
+
+	$phno=$_POST['phno'];
+	$opno=$_POST['opno'];
+	
+	$re1="SELECT * FROM `pharpatients` WHERE opno=$opno";
+	
+	$ab1=mysqli_query($con, $re1);
+
+	
+	
+while($row31=mysqli_fetch_assoc($ab1))
+{
+	if($row31['opno']==$opno)
+	{
+		
+		$l= $row31['doctid'];
+		$live="SELECT min(tokenno) as tokenno FROM `pharpatients` where doctid=$l and waitlist=0";
+		$liv=mysqli_query($con, $live);
+		while($row7=mysqli_fetch_assoc($liv))
+		{
+		
+		?>
+		
+		
+		
+		
+		<table width="200%" style="margin-top:20%;margin-left:350%;background:;">
+		 <tr>
+		<td>		 
+		 Pharmacy Name:
+		 </td>		 
+		 <td>
+		 your token number:		 
+		 </td>
+		 <td>
+		 Live token number:		 
+		 </td>
+		 
+		 </tr>	
+		 <tr> 		 
+		 <td>
+		 	pharmcy1
+		 
+		 </td>
+		 
+		 <td>
+		 <center><div style="border-radius:100%;width:50px;height:50px;margin-top:10px;background:#2ab1bff2;">
+		 <text style="color:white;"><h1><?php echo $row31['tokenno'] ?></h1></text></div></center>
+		 
+		 <?php
+		 if($row31['waitlist']==1)
+		 {
+			 
+		 echo "<span class='an'>!.you are under waiting list.please wait for the call.!</span>";
+		 }
+		 ?>
+		 </td>
+		 <td> <center><div style="border-radius:100%;width:50px;height:50px;margin-top:10px;background:#2ab1bff2;">
+		 <text style="color:white;"><h1><?php echo $row7['tokenno'] ?></h1></text></div></center>
+		  </td>
+		 </tr>
+		</table>
+		
+		
+		
+		
+<?php
+}
+}
+}
+?>
+
+</td>
+</tr>
+</table>
+<?php
+}
 ?>
 
 </body>
