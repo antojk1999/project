@@ -16,6 +16,24 @@ $dname=$_SESSION['dctname'];
 <html>
 <head>
 <style>
+.butto {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 5px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.butt {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #4CAF50;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -75,6 +93,9 @@ Hello &nbsp<?php  echo $dname;?>
   <div class="column" style="width:50%;overflow: scroll;">
 	<table>	
 		<tr>
+		<th><button class="butto butt">Patients List</button></th>
+		</tr>
+		<tr>
         <th>Name</th>
         <th>Op Number</th>
 		<th>Token Number</th>
@@ -130,11 +151,11 @@ while($row3=mysqli_fetch_assoc($ab))
 	  <td>
 	  <form method="post">
 		 
-		 <input type="text" name="tk" value="<?php echo $row3['tokenno'] ?>" hidden>
-		 <input type="text" name="op" value="<?php echo $row3['opno'] ?>" hidden>
+		 <input type="text" name="tk1" value="<?php echo $row3['tokenno'] ?>" hidden>
+		 <input type="text" name="op1" value="<?php echo $row3['opno'] ?>" hidden>
 		 <input type="text" name="fn" value="<?php echo $row3['fname'] ?>" hidden>
 		 <input type="text" name="ln" value="<?php echo $row3['lname'] ?>" hidden>
-		 <button style="width:90px;height:40px;background:#ee1414a8;border-radius:9px;" name="">
+		 <button style="width:90px;height:40px;background:#ee1414a8;border-radius:9px;" name="submit4">
 		 <text style="color:white;">Remove</text>
 		 </button>
 		
@@ -174,8 +195,20 @@ if(isset($_POST['sub2']))		//add to pharmacy not cmpleate
 {
 $a1=$_POST['op'];
 $con=mysqli_connect("localhost","root","","hospital1");	
-$s11="INSERT INTO `pharpatients`(`phid`, `opno`) VALUES (2010,$a1)";
+$qu="SELECT `doctid`, `opno` FROM `pharpatients` WHERE doctid=$id and opno=$a1";
+$re1=mysqli_query($con, $qu);
+$rowcount=mysqli_num_rows($re1);
+if($rowcount > 0)
+{
+echo '<script>alert("Already added to the pharmacy")</script>';
+}
+else
+{
+	$s11="INSERT INTO `pharpatients`(`doctid`,`phid`, `opno`) VALUES ($id,2010,$a1)";
 mysqli_query($con, $s11);
+echo '<script>alert("Successfully added to the pharmacy")</script>';
+}
+
 }
 ?>
   
@@ -201,6 +234,9 @@ mysqli_query($con, $sql1);
 }
 ?>
     <table>
+	<tr>
+		<th><button class="butto butt">Wailting List</button></th>
+		</tr>
       <tr>
         <th>OP Number</th>
         <th>Token Number</th>
@@ -282,7 +318,7 @@ mysqli_query($con, $s1);
 <?php
 if(isset($_POST['submit5']))		//call from waitlist
 {
-	header('refresh:1');
+	
 	$n1=$_POST['tk'];
 	$a1=$_POST['op'];
 $con=mysqli_connect("localhost","root","","hospital1");	

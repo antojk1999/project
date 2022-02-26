@@ -5,22 +5,20 @@ button{
 	width:150px;
 	height:50px;
 	background:#f5f5f5;
-	border-radius:15px;
+	border-radius:10px;
 }
 
 </style>
 
  <table >
-				<!-- <tr>
-				 <td><l><button>Hospital Booking</button> </li></td>
+				<tr>
+				 <td><l><a href="addwait.php"><button>Patients List</button></a></li></td>
 				 </tr>
 				 <tr>
-				 <td><l><button>Hospital Booking</button> </li></td>
+				 <td><l><a href="profile.php"><button>Profile</button></a></li></td>
 				 </tr>
 				 <tr>
-				 <td><l><button>Hospital Booking</button> </li></td>
+				 <td><l><a href="../doctorlogin.php"><button>LogOut</button></a</li></td>
 				 </tr>
-				 <tr>
-				 <td><l><button>Hospital Booking</button> </li></td>
-				 </tr>  -->
+				
 </table>
